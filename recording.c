@@ -27,7 +27,11 @@ public:
     if (recording == NULL)
        g_variant_builder_add(struc, "i", -1);
     else {
+#if VDRVERSNUM >= 20304
+       g_variant_builder_add(struc, "i", recording->Id());
+#else
        g_variant_builder_add(struc, "i", recording->Index() + 1);
+#endif
        cString s;
        const char *c;
        gboolean b;
