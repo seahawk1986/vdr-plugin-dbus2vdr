@@ -121,7 +121,11 @@ namespace cDBusTimersHelper
           timers->SetModified();
 #endif
           isyslog("timer %s added", *timer->ToDescr());
+#if VDRVERSNUM >= 20304
+          cDBusHelper::SendReply(Invocation, 250, *cString::sprintf("%d %s", timer->Id(), *timer->ToText()));
+#else
           cDBusHelper::SendReply(Invocation, 250, *cString::sprintf("%d %s", timer->Index() + 1, *timer->ToText()));
+#endif
           return;
           }
        else
